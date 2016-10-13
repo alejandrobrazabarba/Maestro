@@ -19,6 +19,9 @@ while True:
         s.setTarget(IZQ,4500)
 
         time.sleep(3)
-
+        s.setTarget(DER,6000)
+	s.setTarget(IZQ,6000)
+	time.sleep(1)
         s.setTarget(DER,7500)
         s.setTarget(IZQ,7500)
+	time.sleep(3)

@@ -14,11 +14,13 @@ s = m.Controller()
 #target is equivalent to sending 16384=2^14
 
 
-while True:
+while (True):
         s.setTarget(DER,7500)
         s.setTarget(IZQ,4500)
 
         time.sleep(3)
-
+	s.setTarget(DER,6000)
+	s.setTarget(IZQ,6000)
         s.setTarget(DER,4500)
         s.setTarget(IZQ,7500)
+	time.sleep(3)

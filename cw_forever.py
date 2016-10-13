@@ -12,6 +12,6 @@ s = m.Controller()
 #If you send a 0 it stop sending pulses
 #Because of the way the library works with binary displacements, sending -1 as
 #target is equivalent to sending 16384=2^14
+
 s.setTarget(DER,7500)
 s.setTarget(IZQ,4500)
-
