@@ -6,6 +6,11 @@ import maestro as m
 import time
 
 s = m.Controller()
+
+#Make sure the motors are not moving
+s.setTarget(DER,0)
+s.setTarget(IZQ,0)
+
 #The arguments of setTarget are the channel to which the servo is connected
 #and the pulse width in quarters of microseconds
 #So for a servo with resting position at 1500 us, you need to send 4*1500=6000
