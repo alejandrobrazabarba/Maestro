@@ -30,9 +30,9 @@ while (1):
 	print "Distancia (600-0)=",pos
 	if pos > distance:
 		print "Me paro pq hay obstaculo"
+                s.setTarget(4,0)
+                s.setTarget(5,0)
                 time.sleep(stopped)
-		s.setTarget(4,0)
-		s.setTarget(5,0)
 		print "Rotando para evitar obstaculo"
 		s.setTarget(4,1)
 		s.setTarget(5,-1)
