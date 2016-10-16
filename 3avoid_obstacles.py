@@ -19,6 +19,21 @@ avance = 0.5
 turning = 0.75
 stopped= 0.5
 
+# Variables y constantes para la logica de control
+rotaciones = 0
+NUM_ROT_MAX = 8
+
+# Paro los motores, en el caso de que estuvieran activos
+s.setTarget(servo_izq,0)
+s.setTarget(servo_dcho,0)
+
+# El comportamiento que se consigue con este script es el siguiente:
+# El robot comenzara a moverse hacia adelante indefinidamente en el caso de que no perciba ningun obstaculo
+# Una vez que lo detecte, parara los motores durante un instante, para posteriormente girar sobre sí mismo
+# para asi evitar el obstaculo. Tras este giro, que durara el tiempo especificado por la variable turning, el robot
+# volvera a pararse y volvera a comprobar si hay un obstaculo. Si se produce un numero de giros superior a un maximo,
+# el robot permanecera parado, en espera de que el obstaculo desaparezca, comprobando periodicamente la distancia a este.
+
 # Lecturas de distancia a obstaculo antes de arrancar
 iter=1
 while (1):
@@ -33,22 +48,24 @@ while (1):
                 s.setTarget(4,0)
                 s.setTarget(5,0)
                 time.sleep(stopped)
-		print "Rotando para evitar obstaculo"
-		s.setTarget(4,1)
-		s.setTarget(5,-1)
-        	time.sleep(turning)
-                s.setTarget(4,0)
-                s.setTarget(5,0)
-		time.sleep(stopped)
+		if (rotaciones < NUM_ROT_MAX):
+			print "Rotando para evitar obstaculo"
+			s.setTarget(4,1)
+			s.setTarget(5,-1)
+			rotaciones += 1
+	        	time.sleep(turning)
+	                s.setTarget(4,0)
+	                s.setTarget(5,0)
+			time.sleep(stopped)
+		else:
+			time.sleep(2*stopped)
 
-	        pos_min = s.getPosition(sharp)
-        	pos_max = s.getPosition(sharp)
-        	pos=0.5*(pos_min+pos_max)
-		print "Distancia tras evitar=",pos
-	elif pos > distance:
-		break
 	else:
+		rotaciones = 0
 		s.setTarget(4,1)
 		s.setTarget(5,1)
-	print ""
-	time.sleep(avance)
+		time.sleep(avance)
+
+
+
+
