@@ -29,10 +29,11 @@ s.setTarget(servo_dcho,0)
 
 # El comportamiento que se consigue con este script es el siguiente:
 # El robot comenzara a moverse hacia adelante indefinidamente en el caso de que no perciba ningun obstaculo
-# Una vez que lo detecte, parara los motores durante un instante, para posteriormente girar sobre sí mismo
+# Una vez que lo detecte, parara los motores durante un instante, para posteriormente girar sobre si mismo
 # para asi evitar el obstaculo. Tras este giro, que durara el tiempo especificado por la variable turning, el robot
-# volvera a pararse y volvera a comprobar si hay un obstaculo. Si se produce un numero de giros superior a un maximo,
-# el robot permanecera parado, en espera de que el obstaculo desaparezca, comprobando periodicamente la distancia a este.
+# volvera a pararse y volvera a comprobar si hay un obstaculo. Si se produce un numero de giros superior a un maximo
+# antes de que consiga evitar el obstaculo, el robot permanecera parado, en espera de que el obstaculo desaparezca, 
+# comprobando periodicamente la distancia a este.
 
 # Lecturas de distancia a obstaculo antes de arrancar
 iter=1
@@ -44,23 +45,32 @@ while (1):
 	iter = iter+1
 	print "Distancia (600-0)=",pos
 	if pos > distance:
+		# Hay un obstaculo delante
 		print "Me paro pq hay obstaculo"
                 s.setTarget(4,0)
                 s.setTarget(5,0)
                 time.sleep(stopped)
 		if (rotaciones < NUM_ROT_MAX):
+			# Mientras que no supere el limite de rotaciones
 			print "Rotando para evitar obstaculo"
+			# Giro
 			s.setTarget(4,1)
 			s.setTarget(5,-1)
 			rotaciones += 1
-	        	time.sleep(turning)
+	        	# Permanezco girando
+			time.sleep(turning)
+			# Paro
 	                s.setTarget(4,0)
 	                s.setTarget(5,0)
 			time.sleep(stopped)
 		else:
+			# No hago nada, simplemente espero
+			# porque ya he superado el limite
+			# de rotaciones configurado
 			time.sleep(2*stopped)
 
 	else:
+		# El camino esta despejado
 		rotaciones = 0
 		s.setTarget(4,1)
 		s.setTarget(5,1)
