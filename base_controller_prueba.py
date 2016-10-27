@@ -44,7 +44,7 @@ def avanzar():
 def girar(direccion):
 	s.setTarget(servo_izq,1*direccion)
 	s.setTarget(servo_der,-1*direccion)
-def esperar()
+def esperar():
 	time.sleep(min_stop_time)
 
 def speed_callback(data):
